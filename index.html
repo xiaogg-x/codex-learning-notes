@@ -1,0 +1,1314 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codex 新人学习路径</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f3;
+      --surface: #ffffff;
+      --surface-2: #eef3ef;
+      --text: #17201a;
+      --muted: #647067;
+      --line: #d8dfd8;
+      --accent: #1d6b57;
+      --accent-2: #b74e2f;
+      --accent-3: #315b9d;
+      --warning: #8b4f00;
+      --warning-bg: #fff3d5;
+      --danger: #a23a3a;
+      --danger-bg: #ffe8e4;
+      --ok: #216a43;
+      --ok-bg: #e6f5ec;
+      --shadow: 0 18px 50px rgba(25, 42, 31, 0.1);
+      --radius: 8px;
+      --sidebar: 292px;
+      font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 24px 18px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .brand-mark {
+      display: inline-grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .progress-panel {
+      padding: 14px;
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .progress-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .progress-track {
+      height: 9px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e6ebe6;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), #3d8d72);
+      transition: width 0.25s ease;
+    }
+
+    .search-box {
+      margin-bottom: 18px;
+    }
+
+    .search-box label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .search-box input {
+      width: 100%;
+      min-height: 42px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--text);
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(29, 107, 87, 0.13);
+    }
+
+    .nav-title {
+      margin: 18px 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav-link {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      align-items: center;
+      gap: 9px;
+      min-height: 42px;
+      padding: 8px 10px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .step-no {
+      display: grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      border-radius: 50%;
+      background: #e0e8e1;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .nav-check {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #c8d2ca;
+    }
+
+    .nav-link.done .nav-check {
+      background: var(--ok);
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 48px 42px 32px;
+      background: #10231d;
+      color: #fff;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 12px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2));
+    }
+
+    .hero-inner {
+      position: relative;
+      max-width: 1100px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: #c7ded4;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: #c7ded4;
+    }
+
+    .hero h2 {
+      max-width: 860px;
+      margin: 0;
+      font-size: clamp(32px, 5vw, 64px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 780px;
+      margin: 18px 0 0;
+      color: #dce9e3;
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .btn.secondary {
+      border-color: rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn.ghost {
+      border-color: var(--line);
+      background: #fff;
+      color: var(--text);
+    }
+
+    .btn:hover {
+      filter: brightness(0.96);
+    }
+
+    .content {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 42px 64px;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .metric-card,
+    .section-card,
+    .term-card,
+    .prompt-card,
+    .safety-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+    }
+
+    .metric-card {
+      padding: 16px;
+    }
+
+    .metric-card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--accent);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .metric-card span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-card {
+      margin-bottom: 18px;
+      overflow: hidden;
+      scroll-margin-top: 18px;
+    }
+
+    .section-card.hidden,
+    .term-card.hidden,
+    .prompt-card.hidden {
+      display: none;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: start;
+      padding: 22px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff, #fbfcfb);
+    }
+
+    .section-number {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .section-title h3 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .done-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 110px;
+      color: var(--muted);
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .done-control input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+    }
+
+    .section-body {
+      padding: 22px;
+    }
+
+    .remember-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .remember-card {
+      min-height: 132px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfb;
+    }
+
+    .remember-card b {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--accent);
+      font-size: 15px;
+    }
+
+    .remember-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    details + details {
+      margin-top: 10px;
+    }
+
+    summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      display: grid;
+      width: 24px;
+      height: 24px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--surface-2);
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    details[open] summary::after {
+      content: "-";
+    }
+
+    .detail-content {
+      padding: 0 16px 16px;
+      color: var(--muted);
+    }
+
+    .detail-content ul,
+    .detail-content ol {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    .detail-content li + li {
+      margin-top: 6px;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #edf1ed;
+      color: #24352d;
+      font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.94em;
+    }
+
+    pre {
+      overflow: auto;
+      margin: 12px 0 0;
+      padding: 14px;
+      border-radius: var(--radius);
+      background: #12251e;
+      color: #e9f3ed;
+      line-height: 1.55;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    .callout {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius);
+      background: var(--surface-2);
+      color: #34423a;
+    }
+
+    .callout.warning {
+      border-color: var(--warning);
+      background: var(--warning-bg);
+    }
+
+    .callout.danger {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 34px 0 14px;
+    }
+
+    .section-heading h3 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: 0;
+    }
+
+    .section-heading p {
+      max-width: 620px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .term-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .term-card {
+      padding: 16px;
+    }
+
+    .term-card h4,
+    .prompt-card h4,
+    .safety-card h4 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    .term-card p,
+    .prompt-card p,
+    .safety-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .term-tag {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .prompt-card {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .prompt-text {
+      padding: 12px;
+      border-radius: var(--radius);
+      background: #f2f5f2;
+      color: #26352d;
+      font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .copy-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .copy-status {
+      min-height: 20px;
+      color: var(--ok);
+      font-size: 13px;
+    }
+
+    .copy-btn {
+      min-height: 34px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .safety-card {
+      padding: 16px;
+    }
+
+    .safety-card.danger {
+      border-color: #f0c0b7;
+      background: var(--danger-bg);
+    }
+
+    .safety-card.warning {
+      border-color: #ead49f;
+      background: var(--warning-bg);
+    }
+
+    .safety-card.ok {
+      border-color: #b9dfc8;
+      background: var(--ok-bg);
+    }
+
+    .empty-state {
+      display: none;
+      margin: 22px 0;
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state.show {
+      display: block;
+    }
+
+    .footer {
+      margin-top: 32px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .app-shell {
+        display: block;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 18px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero,
+      .content {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .quick-grid,
+      .remember-grid,
+      .term-grid,
+      .safety-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-list,
+      .quick-grid,
+      .remember-grid,
+      .term-grid,
+      .prompt-grid,
+      .safety-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .section-header {
+        grid-template-columns: 1fr;
+      }
+
+      .done-control {
+        min-width: 0;
+      }
+
+      .section-heading {
+        display: grid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="学习导航">
+      <div class="brand">
+        <div class="brand-mark">Cx</div>
+        <h1>Codex 新人学习路径</h1>
+        <p>把 5 份入门文档整理成一条可操作的学习路线。</p>
+      </div>
+
+      <div class="progress-panel" aria-live="polite">
+        <div class="progress-line">
+          <span>学习进度</span>
+          <strong id="progressText">0 / 6</strong>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <label for="searchInput">搜索章节、术语或提示词</label>
+        <input id="searchInput" type="search" placeholder="例如：权限、git status、AGENTS.md">
+      </div>
+
+      <div class="nav-title">学习顺序</div>
+      <ol class="nav-list" id="navList">
+        <li><a class="nav-link" href="#step-1" data-nav="step-1"><span class="step-no">1</span><span>认识 Codex</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#step-2" data-nav="step-2"><span class="step-no">2</span><span>第一次怎么用</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#step-3" data-nav="step-3"><span class="step-no">3</span><span>权限和安全</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#step-4" data-nav="step-4"><span class="step-no">4</span><span>技能与插件</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#step-5" data-nav="step-5"><span class="step-no">5</span><span>用 Git 管理</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#step-6" data-nav="step-6"><span class="step-no">6</span><span>固定项目习惯</span><span class="nav-check"></span></a></li>
+      </ol>
+    </aside>
+
+    <main class="main">
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="eyebrow">新人第一小时需要知道的事</div>
+          <h2>先知道边界，再让 Codex 帮你做事。</h2>
+          <p>这不是一份长文档合集，而是一条学习路径：你会先理解 Codex 是什么，再学会怎么下任务、怎么控制权限、怎么用 Git 保护修改，最后学会给不同项目配置不同协作规则。</p>
+          <div class="hero-actions">
+            <a class="btn" href="#step-1">开始学习</a>
+            <a class="btn secondary" href="#terms">查看术语</a>
+            <a class="btn secondary" href="#prompts">复制提示词</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="content">
+        <section class="quick-grid" aria-label="页面概览">
+          <div class="metric-card"><strong>6</strong><span>个学习阶段，按首次使用顺序排列。</span></div>
+          <div class="metric-card"><strong>18</strong><span>条重点记忆点，先抓住大方向。</span></div>
+          <div class="metric-card"><strong>8</strong><span>个术语解释，解决名称混淆。</span></div>
+          <div class="metric-card"><strong>6</strong><span>段可复制提示词，直接用于对话。</span></div>
+        </section>
+
+        <div id="emptyState" class="empty-state">没有匹配内容。试试搜索“权限”“插件”“Git”或“人设”。</div>
+
+        <section id="step-1" class="section-card searchable" data-keywords="codex 是什么 coding agent 编程代理 能做什么 新人 入门">
+          <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">
+              <h3>先认识 Codex 是什么</h3>
+              <p>Codex 是会读项目、改文件、跑命令和解释结果的 AI 编程代理，不只是聊天助手。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="step-1"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="remember-grid">
+              <div class="remember-card"><b>它围绕项目工作</b><p>Codex 最擅长结合代码仓库、文件、命令输出和你的目标推进任务。</p></div>
+              <div class="remember-card"><b>它可以动手</b><p>在权限允许时，它能创建文件、修改代码、运行测试和总结改动。</p></div>
+              <div class="remember-card"><b>它仍需要你把关</b><p>业务规则、风险取舍和最终是否合并发布，应由你确认。</p></div>
+            </div>
+            <details>
+              <summary>Codex 适合做哪些事</summary>
+              <div class="detail-content">
+                <ul>
+                  <li>解释陌生项目结构、启动方式和关键模块。</li>
+                  <li>修复明确 bug、补测试、改文档、做小到中等规模功能。</li>
+                  <li>根据报错定位问题，运行相关检查并解释结果。</li>
+                  <li>以 code review 视角找回归、安全、边界和测试缺口。</li>
+                </ul>
+              </div>
+            </details>
+            <details>
+              <summary>哪些事不要一开始就交给它</summary>
+              <div class="detail-content">
+                <ul>
+                  <li>完全模糊的产品方向，例如“帮我优化一下”。</li>
+                  <li>无测试覆盖的核心账务、支付、权限和生产部署逻辑。</li>
+                  <li>需要读取密钥、客户隐私或真实生产数据的任务。</li>
+                </ul>
+              </div>
+            </details>
+            <div class="callout">新手关键心法：把 Codex 当成“能执行的工程搭档”，而不是“自动替你做所有决定的人”。</div>
+          </div>
+        </section>
+
+        <section id="step-2" class="section-card searchable" data-keywords="第一次 怎么用 提示词 验收标准 先读 再改 测试">
+          <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">
+              <h3>第一次使用：先读，再改，再验证</h3>
+              <p>不要一上来就让 Codex 大改。先让它读项目，确认理解，再给小任务和验收标准。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="step-2"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="remember-grid">
+              <div class="remember-card"><b>先只读分析</b><p>让 Codex 说明项目结构、启动方式、测试方式和可能要改的文件。</p></div>
+              <div class="remember-card"><b>任务要可验收</b><p>写清楚目标、不能改变什么、完成后怎么判断成功。</p></div>
+              <div class="remember-card"><b>完成后要验证</b><p>让 Codex 运行相关测试或说明为什么不能运行。</p></div>
+            </div>
+            <details open>
+              <summary>推荐第一次任务流程</summary>
+              <div class="detail-content">
+                <ol>
+                  <li>让 Codex 只读项目，不修改文件。</li>
+                  <li>确认它对项目结构和命令的理解。</li>
+                  <li>给一个小任务，例如改文档、修一个明确 bug、补一个测试。</li>
+                  <li>要求它说明修改文件和验证方式。</li>
+                  <li>你查看 diff，再决定是否保留。</li>
+                </ol>
+              </div>
+            </details>
+            <details>
+              <summary>好提示词长什么样</summary>
+              <div class="detail-content">
+                <p>好的提示词包含目标、上下文、约束和验收标准。</p>
+                <pre><code>请修复订单列表分页失效的问题。
+复现方式：点击第 2 页后列表没有更新。
+约束：不要改变现有视觉样式。
+验收标准：页码、URL 和列表数据都正确更新，相关测试通过。</code></pre>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section id="step-3" class="section-card searchable" data-keywords="权限 安全 workspace sandbox 沙盒 可写目录 网络 密钥 删除 危险命令">
+          <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">
+              <h3>理解权限：知道 Codex 能碰哪里</h3>
+              <p>当前会话的核心边界是工作区和沙盒。能读不等于应该读，能写也不等于随便写。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="step-3"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="remember-grid">
+              <div class="remember-card"><b>工作区是主范围</b><p>当前可写根目录是 <code>E:\code\codex_projects\first_use</code>。</p></div>
+              <div class="remember-card"><b>敏感操作要确认</b><p>联网、安装依赖、写工作区外、删除文件和危险 Git 命令都要谨慎。</p></div>
+              <div class="remember-card"><b>密钥不要暴露</b><p>不要让 Codex 无目的读取 <code>.env</code>、私钥、token 和客户隐私数据。</p></div>
+            </div>
+            <details open>
+              <summary>哪些操作需要特别小心</summary>
+              <div class="detail-content">
+                <ul>
+                  <li>写入工作区外目录，例如用户目录、系统目录、其他项目。</li>
+                  <li>联网下载或安装依赖，例如 <code>npm install</code>、<code>pip install</code>。</li>
+                  <li>删除、递归清理、批量移动、覆盖文件。</li>
+                  <li><code>git reset --hard</code>、<code>git clean -f</code>、<code>git checkout -- .</code>。</li>
+                </ul>
+              </div>
+            </details>
+            <details>
+              <summary>推荐安全约束</summary>
+              <div class="detail-content">
+                <pre><code>默认只在当前工作区内工作。
+不要读取密钥、隐私文件或用户目录。
+不要安装依赖、访问网络、删除文件、提交或推送代码，除非我明确批准。
+复杂任务先给方案，再执行。</code></pre>
+              </div>
+            </details>
+            <div class="callout danger">最重要的安全规则：高风险操作前让 Codex 解释“要做什么、影响哪些路径、如何撤销”。</div>
+          </div>
+        </section>
+
+        <section id="step-4" class="section-card searchable" data-keywords="技能 插件 连接器 skill plugin connector tool github browser 自动调用 授权">
+          <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">
+              <h3>分清技能、插件、连接器</h3>
+              <p>技能是流程说明，插件是能力包，连接器是外部账号授权，工具是真正执行动作的接口。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="step-4"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="remember-grid">
+              <div class="remember-card"><b>技能告诉我怎么做</b><p>例如处理 GitHub CI 失败时，先看 PR、日志，再本地复现。</p></div>
+              <div class="remember-card"><b>插件提供能力包</b><p>例如 Browser 用来检查本地页面，GitHub 用来处理 PR 和 CI。</p></div>
+              <div class="remember-card"><b>连接器代表授权</b><p>访问 GitHub、Slack、Drive 等外部服务，通常需要你授权。</p></div>
+            </div>
+            <details open>
+              <summary>用一个 GitHub PR 例子串起来</summary>
+              <div class="detail-content">
+                <ol>
+                  <li>你说：帮我看这个 PR 为什么 CI 失败。</li>
+                  <li>Codex 识别任务，使用 <code>github:gh-fix-ci</code> 技能。</li>
+                  <li>GitHub 插件提供读取 PR、diff、CI 状态的能力。</li>
+                  <li>GitHub 连接器决定是否能访问你的仓库数据。</li>
+                  <li>具体工具执行“获取 PR 信息”“读取日志”“编辑文件”等动作。</li>
+                </ol>
+              </div>
+            </details>
+            <details>
+              <summary>我会自动用它们吗</summary>
+              <div class="detail-content">
+                <ul>
+                  <li>任务明显需要时，会主动使用已有技能或插件。</li>
+                  <li>你明确指定某个插件或连接器时，会优先按你的要求。</li>
+                  <li>涉及外部写操作、安装、授权或敏感数据时，不应该静默执行。</li>
+                  <li>当前能力不够时，会说明缺口，并在合适时请求安装或授权。</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section id="step-5" class="section-card searchable" data-keywords="git status git diff 分支 commit 提交 撤销 restore branch">
+          <div class="section-header">
+            <div class="section-number">5</div>
+            <div class="section-title">
+              <h3>用 Git 管理每一次修改</h3>
+              <p><code>git status</code> 是开始前后的安全检查，<code>git diff</code> 是你 review Codex 改动的主工具。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="step-5"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="remember-grid">
+              <div class="remember-card"><b>开始前看状态</b><p><code>git status</code> 告诉你当前分支、已修改文件和未跟踪文件。</p></div>
+              <div class="remember-card"><b>用分支隔离任务</b><p>建议每个 Codex 任务一个分支，例如 <code>codex/fix-login</code>。</p></div>
+              <div class="remember-card"><b>提交前看差异</b><p><code>git diff</code> 帮你确认是否只改了相关文件。</p></div>
+            </div>
+            <details open>
+              <summary>推荐命令顺序</summary>
+              <div class="detail-content">
+                <pre><code>git status
+git switch -c codex/task-name
+# 让 Codex 修改
+git status
+git diff
+# 运行测试
+git add .
+git commit -m "Describe the change"</code></pre>
+              </div>
+            </details>
+            <details>
+              <summary>不满意修改时怎么办</summary>
+              <div class="detail-content">
+                <ul>
+                  <li>丢掉某个文件未提交改动：<code>git restore path/to/file</code>。</li>
+                  <li>预览会删除哪些未跟踪文件：<code>git clean -n</code>。</li>
+                  <li><code>git clean -f</code> 和 <code>git reset --hard</code> 会丢内容，新手不要随手执行。</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section id="step-6" class="section-card searchable" data-keywords="AGENTS.md 人设 项目规则 回答结构 固定风格 上下文 输入">
+          <div class="section-header">
+            <div class="section-number">6</div>
+            <div class="section-title">
+              <h3>用 AGENTS.md 固定项目习惯</h3>
+              <p>如果你想让 Codex 在不同项目里使用不同人设、结构和规则，把项目约定写进根目录的 <code>AGENTS.md</code>。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="step-6"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="remember-grid">
+              <div class="remember-card"><b>项目规则跟着项目走</b><p>当前项目一份 <code>AGENTS.md</code>，另一个项目可以有另一份。</p></div>
+              <div class="remember-card"><b>写具体比写抽象有用</b><p>不要只写“专业一点”，要写回答结构、测试命令和禁止事项。</p></div>
+              <div class="remember-card"><b>不能覆盖安全规则</b><p><code>AGENTS.md</code> 不能让 Codex 绕过沙盒、权限和系统规则。</p></div>
+            </div>
+            <details open>
+              <summary>AGENTS.md 可以写什么</summary>
+              <div class="detail-content">
+                <ul>
+                  <li>助手角色：新手教学助手、严格 code reviewer、产品型前端工程师。</li>
+                  <li>回答结构：结论、原因、步骤、风险、下一步。</li>
+                  <li>项目命令：启动、测试、构建、格式化。</li>
+                  <li>安全规则：不读密钥、不自动提交、不执行危险命令。</li>
+                </ul>
+              </div>
+            </details>
+            <details>
+              <summary>一个简短模板</summary>
+              <div class="detail-content">
+                <pre><code># AGENTS.md
+
+## 助手角色
+你是面向初学者的中文 Codex 教学助手。
+
+## 回答风格
+- 先给结论，再分步骤解释。
+- 多用具体例子。
+- 命令和文件名使用反引号。
+
+## 安全规则
+- 不要访问工作区外文件，除非用户明确要求。
+- 不要安装依赖、删除文件、提交或推送，除非用户明确确认。</code></pre>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section id="terms" class="searchable" data-keywords="术语 词典 workspace sandbox connector skill plugin tool AGENTS.md git status">
+          <div class="section-heading">
+            <h3>术语词典</h3>
+            <p>这些名称第一次看容易混。先理解大概含义，再在真实任务里慢慢熟悉。</p>
+          </div>
+          <div class="term-grid">
+            <article class="term-card searchable" data-keywords="workspace 工作区 当前项目目录">
+              <span class="term-tag">workspace</span>
+              <h4>工作区</h4>
+              <p>Codex 当前围绕工作的项目目录。当前工作区是 <code>E:\code\codex_projects\first_use</code>。</p>
+            </article>
+            <article class="term-card searchable" data-keywords="sandbox 沙盒 权限 可写目录">
+              <span class="term-tag">sandbox</span>
+              <h4>沙盒</h4>
+              <p>限制 Codex 能读写和运行什么的安全边界。当前模式允许在工作区内写文件。</p>
+            </article>
+            <article class="term-card searchable" data-keywords="skill 技能 流程说明">
+              <span class="term-tag">skill</span>
+              <h4>技能</h4>
+              <p>一份工作流程说明。它告诉 Codex 遇到某类任务时按什么步骤做。</p>
+            </article>
+            <article class="term-card searchable" data-keywords="plugin 插件 能力包 browser github">
+              <span class="term-tag">plugin</span>
+              <h4>插件</h4>
+              <p>一包能力，例如 Browser 或 GitHub。插件可能包含技能、工具或外部服务能力。</p>
+            </article>
+            <article class="term-card searchable" data-keywords="connector 连接器 授权 外部账号">
+              <span class="term-tag">connector</span>
+              <h4>连接器</h4>
+              <p>你授权 Codex 访问外部服务的通道，例如 GitHub、Slack、Google Drive。</p>
+            </article>
+            <article class="term-card searchable" data-keywords="tool 工具 执行动作">
+              <span class="term-tag">tool</span>
+              <h4>工具</h4>
+              <p>Codex 实际调用的动作接口，例如运行命令、编辑文件、查看 PR。</p>
+            </article>
+            <article class="term-card searchable" data-keywords="AGENTS.md 项目规则 人设">
+              <span class="term-tag">AGENTS.md</span>
+              <h4>项目规则文件</h4>
+              <p>写在项目根目录，告诉 Codex 本项目的人设、回答结构、命令和安全约束。</p>
+            </article>
+            <article class="term-card searchable" data-keywords="git status git diff">
+              <span class="term-tag">git status</span>
+              <h4>Git 状态检查</h4>
+              <p>查看当前分支、修改文件、未跟踪文件和暂存区状态，不会改动任何文件。</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="prompts" class="searchable" data-keywords="提示词 prompt 复制 安全 只读 修改 review git">
+          <div class="section-heading">
+            <h3>常用提示词</h3>
+            <p>这些提示词可以直接复制给 Codex，用来控制范围、保护文件和提高任务质量。</p>
+          </div>
+          <div class="prompt-grid">
+            <article class="prompt-card searchable" data-keywords="只读 分析 项目结构">
+              <h4>首次阅读项目</h4>
+              <div class="prompt-text">请先只读分析当前仓库，不要修改文件。告诉我项目用途、技术栈、主要目录、启动命令、测试命令，以及新人最应该先看的文件。</div>
+              <div class="copy-row"><span class="copy-status"></span><button class="copy-btn" type="button">复制</button></div>
+            </article>
+            <article class="prompt-card searchable" data-keywords="修 bug 验收标准">
+              <h4>修复明确 bug</h4>
+              <div class="prompt-text">请修复这个 bug：[描述问题]。复现方式：[步骤]。期望行为：[描述]。约束：尽量最小改动，不改变无关逻辑。完成后运行相关测试，并说明改动点。</div>
+              <div class="copy-row"><span class="copy-status"></span><button class="copy-btn" type="button">复制</button></div>
+            </article>
+            <article class="prompt-card searchable" data-keywords="权限 安全 外部目录">
+              <h4>限制访问范围</h4>
+              <div class="prompt-text">默认只在当前工作区内工作。不要读取密钥、隐私文件或用户目录。不要写入工作区外路径。不要安装依赖、访问网络、删除文件、提交或推送代码，除非我明确批准。</div>
+              <div class="copy-row"><span class="copy-status"></span><button class="copy-btn" type="button">复制</button></div>
+            </article>
+            <article class="prompt-card searchable" data-keywords="git status diff 撤销">
+              <h4>检查 Git 状态</h4>
+              <div class="prompt-text">请先运行 git status，告诉我当前工作区是否干净。不要修改文件。如果有未提交改动，请说明哪些可能是我自己的改动。</div>
+              <div class="copy-row"><span class="copy-status"></span><button class="copy-btn" type="button">复制</button></div>
+            </article>
+            <article class="prompt-card searchable" data-keywords="review 审查 风险">
+              <h4>让 Codex 做 review</h4>
+              <div class="prompt-text">请 review 当前 Git 改动。重点找 bug、回归风险、安全问题和缺失测试。不要泛泛评价风格，只列出需要处理的具体问题。</div>
+              <div class="copy-row"><span class="copy-status"></span><button class="copy-btn" type="button">复制</button></div>
+            </article>
+            <article class="prompt-card searchable" data-keywords="AGENTS.md 人设 规则">
+              <h4>创建项目规则</h4>
+              <div class="prompt-text">请为当前项目创建 AGENTS.md，让你以后以“中文新手教学助手”的人设回答，并统一使用教程式 Markdown 结构。安全规则包括：不读密钥、不自动提交、不执行危险命令。</div>
+              <div class="copy-row"><span class="copy-status"></span><button class="copy-btn" type="button">复制</button></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="safety" class="searchable" data-keywords="安全 提醒 密钥 删除 提交 网络">
+          <div class="section-heading">
+            <h3>安全提醒</h3>
+            <p>使用 Codex 的关键不是把权限全放开，而是知道什么时候该让它动手，什么时候该先确认。</p>
+          </div>
+          <div class="safety-grid">
+            <article class="safety-card danger">
+              <h4>不要默认读取敏感文件</h4>
+              <p><code>.env</code>、私钥、token、客户数据、生产配置都应最小化暴露。</p>
+            </article>
+            <article class="safety-card warning">
+              <h4>不要让它静默做外部写操作</h4>
+              <p>评论 PR、发消息、改日历、写 Drive 文档、提交推送前都应明确确认。</p>
+            </article>
+            <article class="safety-card danger">
+              <h4>不要随手执行危险 Git 命令</h4>
+              <p><code>git reset --hard</code> 和 <code>git clean -f</code> 会丢内容，执行前先看影响范围。</p>
+            </article>
+            <article class="safety-card ok">
+              <h4>优先让它小步修改</h4>
+              <p>每次只做一个明确任务，改完看 <code>git diff</code>，通过测试后再提交。</p>
+            </article>
+            <article class="safety-card ok">
+              <h4>优先写验收标准</h4>
+              <p>告诉 Codex 什么算成功，什么行为不能变，比单纯说“优化一下”可靠得多。</p>
+            </article>
+            <article class="safety-card warning">
+              <h4>高风险任务先要方案</h4>
+              <p>数据库、权限、支付、部署和大重构，先分析方案，再允许修改。</p>
+            </article>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p>内容来源：当前目录下的 5 份 Codex 入门 Markdown 文档。页面为零依赖静态文件，可直接打开。</p>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const storageKey = "codex-learning-progress-v1";
+    const checkboxes = Array.from(document.querySelectorAll("[data-step]"));
+    const progressText = document.getElementById("progressText");
+    const progressBar = document.getElementById("progressBar");
+    const navLinks = Array.from(document.querySelectorAll("[data-nav]"));
+    const searchInput = document.getElementById("searchInput");
+    const searchableItems = Array.from(document.querySelectorAll(".searchable"));
+    const emptyState = document.getElementById("emptyState");
+
+    function loadProgress() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey)) || {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveProgress(progress) {
+      localStorage.setItem(storageKey, JSON.stringify(progress));
+    }
+
+    function syncProgress() {
+      const progress = loadProgress();
+      checkboxes.forEach((box) => {
+        box.checked = Boolean(progress[box.dataset.step]);
+      });
+      const doneCount = checkboxes.filter((box) => box.checked).length;
+      progressText.textContent = `${doneCount} / ${checkboxes.length}`;
+      progressBar.style.width = `${(doneCount / checkboxes.length) * 100}%`;
+      navLinks.forEach((link) => {
+        link.classList.toggle("done", Boolean(progress[link.dataset.nav]));
+      });
+    }
+
+    checkboxes.forEach((box) => {
+      box.addEventListener("change", () => {
+        const progress = loadProgress();
+        progress[box.dataset.step] = box.checked;
+        saveProgress(progress);
+        syncProgress();
+      });
+    });
+
+    function getTextForSearch(element) {
+      return `${element.textContent} ${element.dataset.keywords || ""}`.toLowerCase();
+    }
+
+    function applySearch() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      searchableItems.forEach((item) => {
+        const isMatch = !query || getTextForSearch(item).includes(query);
+        item.classList.toggle("hidden", !isMatch);
+        if (isMatch && item.classList.contains("section-card")) visibleCount += 1;
+      });
+
+      const anyVisible = searchableItems.some((item) => !item.classList.contains("hidden"));
+      emptyState.classList.toggle("show", !anyVisible);
+    }
+
+    searchInput.addEventListener("input", applySearch);
+
+    const observedSections = Array.from(document.querySelectorAll(".section-card"));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          link.classList.toggle("active", link.dataset.nav === entry.target.id);
+        });
+      });
+    }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+
+    observedSections.forEach((section) => observer.observe(section));
+
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      document.body.removeChild(textarea);
+      if (!copied) throw new Error("copy command failed");
+      return true;
+    }
+
+    document.querySelectorAll(".copy-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const card = button.closest(".prompt-card");
+        const text = card.querySelector(".prompt-text").innerText;
+        const status = card.querySelector(".copy-status");
+        try {
+          await copyText(text);
+          status.textContent = "已复制";
+        } catch {
+          status.textContent = "复制失败，请手动选择文本";
+        }
+        window.setTimeout(() => {
+          status.textContent = "";
+        }, 1800);
+      });
+    });
+
+    syncProgress();
+  </script>
+</body>
+</html>

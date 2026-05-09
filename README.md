@@ -1,43 +1,46 @@
-# Codex 新人学习页
+# Codex 与代码托管学习页
 
-这是一个面向 Codex 初次使用者的本地学习项目。项目把多份入门说明整理成一个零依赖前端页面，帮助新人按顺序理解 Codex 的能力、权限、安全边界、插件/连接器、Git 工作流和项目规则配置。
+这是一个面向初次使用者的本地静态学习项目。项目把 Codex 入门、Git 工作流、GitHub 和 Gitee 学习流程整理成可直接打开的前端页面和配套 Markdown 文档。
 
 ## 页面入口
 
-直接打开根目录下的 `index.html` 即可使用。
+主学习页：
 
-页面包含：
+- `codex-learning-path.html`：Codex 新人学习路径主页。
 
-- 6 步学习路径
-- 学习进度勾选和本地保存
-- 关键词搜索
-- 折叠详情
-- 术语词典
-- 常用提示词复制
-- 安全提醒
+代码托管平台学习页：
 
-## 学习顺序
+- `code-hosting-guides/github-beginner-guide.html`：GitHub 新手学习流程。
+- `code-hosting-guides/gitee-beginner-guide.html`：Gitee 新手学习流程。
 
-1. 认识 Codex 是什么
-2. 第一次怎么使用 Codex
-3. 理解权限和安全边界
-4. 分清技能、插件和连接器
-5. 用 Git 管理 Codex 修改
-6. 用 `AGENTS.md` 固定项目协作习惯
+这些页面都是零依赖静态文件，可以直接双击打开。
 
-## 文档目录
+## 目录说明
 
-原始整理文档位于 `docs/`：
+- `codex-guides/`：Codex 相关 Markdown 学习资料。
+- `git-github-notes/`：Git、GitHub 和 GitHub CLI 的说明笔记。
+- `gitee-notes/`：Gitee 入门说明笔记。
+- `code-hosting-guides/`：GitHub/Gitee 前端学习子页面。
+- `code-hosting-guides/assets/`：代码托管学习页共用样式和交互脚本。
 
-- `codex_intro.md`：Codex 是什么、怎么用、功能和限制
-- `codex_permissions.md`：权限、访问范围和控制方式
-- `codex_plugins_connectors.md`：技能、插件和连接器说明
-- `codex_git_workflow.md`：用 Git 管理 Codex 每一次修改
-- `codex_context_and_persona.md`：上下文输入、人设和项目规则配置
+## 文档清单
+
+Codex 学习资料：
+
+- `codex-guides/codex-overview.md`：Codex 是什么、怎么用、功能和限制。
+- `codex-guides/codex-permissions-and-safety.md`：权限、访问范围和安全边界。
+- `codex-guides/codex-skills-plugins-connectors.md`：技能、插件和连接器说明。
+- `codex-guides/codex-git-workflow.md`：用 Git 管理 Codex 每一次修改。
+- `codex-guides/codex-context-persona-rules.md`：上下文输入、人设和项目规则配置。
+
+代码托管资料：
+
+- `git-github-notes/git-github-gh-login-guide.md`：Git、GitHub、gh 的区别、联系和登录说明。
+- `gitee-notes/gitee-beginner-guide.md`：Gitee 入门指南。
 
 ## 本地预览
 
-方式一：直接双击打开 `index.html`。
+方式一：直接打开 `codex-learning-path.html`。
 
 方式二：启动一个本地静态服务：
 
@@ -48,21 +51,21 @@ python -m http.server 8765 --bind 127.0.0.1
 然后访问：
 
 ```text
-http://127.0.0.1:8765/index.html
+http://127.0.0.1:8765/codex-learning-path.html
 ```
 
 ## 项目特点
 
-- 零依赖：不需要安装 Node、React 或构建工具
-- 单文件页面：所有 HTML、CSS、JavaScript 都在 `index.html`
-- 新手优先：按第一次使用 Codex 的认知顺序组织内容
-- 安全优先：突出工作区、沙盒、敏感文件、危险命令和 Git 保护流程
+- 零依赖：不需要安装 Node、React 或构建工具。
+- 静态页面：HTML、CSS 和 JavaScript 都在本仓库内。
+- 新手优先：按第一次使用 Codex、GitHub、Gitee 的认知顺序组织内容。
+- 安全优先：突出工作区、沙盒、敏感文件、危险命令、远程仓库和访问令牌风险。
 
 ## 推荐使用方式
 
-首次使用时，按页面中的 6 个阶段依次阅读，并把常用提示词复制到 Codex 对话里试用。
+首次使用时，先打开 `codex-learning-path.html`，按页面中的 6 个阶段阅读。需要学习远程仓库时，再进入 GitHub 或 Gitee 子页面。
 
-如果你继续扩展这个项目，建议每次修改前运行：
+继续扩展这个项目时，建议每次修改前运行：
 
 ```bash
 git status

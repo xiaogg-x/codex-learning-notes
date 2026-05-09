@@ -421,8 +421,18 @@
 
     .section-card.hidden,
     .term-card.hidden,
-    .prompt-card.hidden {
+    .prompt-card.hidden,
+    .safety-card.hidden,
+    .search-group.hidden {
       display: none;
+    }
+
+    .search-highlight {
+      padding: 0 2px;
+      border-radius: 4px;
+      background: #ffe36e;
+      color: #17201a;
+      box-shadow: 0 0 0 1px rgba(139, 79, 0, 0.16);
     }
 
     .section-header {
@@ -1151,7 +1161,7 @@ git commit -m "Describe the change"</code></pre>
           </div>
         </section>
 
-        <section id="terms" class="searchable" data-keywords="术语 词典 workspace sandbox connector skill plugin tool AGENTS.md git status">
+        <section id="terms" class="searchable search-group" data-keywords="术语 词典 workspace sandbox connector skill plugin tool AGENTS.md git status">
           <div class="section-heading">
             <h3>术语词典</h3>
             <p>这些名称第一次看容易混。先理解大概含义，再在真实任务里慢慢熟悉。</p>
@@ -1200,7 +1210,7 @@ git commit -m "Describe the change"</code></pre>
           </div>
         </section>
 
-        <section id="prompts" class="searchable" data-keywords="提示词 prompt 复制 安全 只读 修改 review git">
+        <section id="prompts" class="searchable search-group" data-keywords="提示词 prompt 复制 安全 只读 修改 review git">
           <div class="section-heading">
             <h3>常用提示词</h3>
             <p>这些提示词可以直接复制给 Codex，用来控制范围、保护文件和提高任务质量。</p>
@@ -1239,33 +1249,33 @@ git commit -m "Describe the change"</code></pre>
           </div>
         </section>
 
-        <section id="safety" class="searchable" data-keywords="安全 提醒 密钥 删除 提交 网络">
+        <section id="safety" class="searchable search-group" data-keywords="安全 提醒 密钥 删除 提交 网络">
           <div class="section-heading">
             <h3>安全提醒</h3>
             <p>使用 Codex 的关键不是把权限全放开，而是知道什么时候该让它动手，什么时候该先确认。</p>
           </div>
           <div class="safety-grid">
-            <article class="safety-card danger">
+            <article class="safety-card danger searchable" data-keywords="敏感文件 env 私钥 token 客户数据 生产配置">
               <h4>不要默认读取敏感文件</h4>
               <p><code>.env</code>、私钥、token、客户数据、生产配置都应最小化暴露。</p>
             </article>
-            <article class="safety-card warning">
+            <article class="safety-card warning searchable" data-keywords="外部写操作 PR 消息 日历 Drive 提交 推送">
               <h4>不要让它静默做外部写操作</h4>
               <p>评论 PR、发消息、改日历、写 Drive 文档、提交推送前都应明确确认。</p>
             </article>
-            <article class="safety-card danger">
+            <article class="safety-card danger searchable" data-keywords="危险 Git 命令 reset clean 丢内容">
               <h4>不要随手执行危险 Git 命令</h4>
               <p><code>git reset --hard</code> 和 <code>git clean -f</code> 会丢内容，执行前先看影响范围。</p>
             </article>
-            <article class="safety-card ok">
+            <article class="safety-card ok searchable" data-keywords="小步修改 git diff 测试 提交">
               <h4>优先让它小步修改</h4>
               <p>每次只做一个明确任务，改完看 <code>git diff</code>，通过测试后再提交。</p>
             </article>
-            <article class="safety-card ok">
+            <article class="safety-card ok searchable" data-keywords="验收标准 成功 行为 可靠">
               <h4>优先写验收标准</h4>
               <p>告诉 Codex 什么算成功，什么行为不能变，比单纯说“优化一下”可靠得多。</p>
             </article>
-            <article class="safety-card warning">
+            <article class="safety-card warning searchable" data-keywords="高风险 数据库 权限 支付 部署 重构 方案">
               <h4>高风险任务先要方案</h4>
               <p>数据库、权限、支付、部署和大重构，先分析方案，再允许修改。</p>
             </article>
@@ -1286,7 +1296,8 @@ git commit -m "Describe the change"</code></pre>
     const progressBar = document.getElementById("progressBar");
     const navLinks = Array.from(document.querySelectorAll("[data-nav]"));
     const searchInput = document.getElementById("searchInput");
-    const searchableItems = Array.from(document.querySelectorAll(".searchable"));
+    const searchableCards = Array.from(document.querySelectorAll(".section-card.searchable, .term-card.searchable, .prompt-card.searchable, .safety-card.searchable"));
+    const searchGroups = Array.from(document.querySelectorAll(".search-group"));
     const emptyState = document.getElementById("emptyState");
 
     function loadProgress() {
@@ -1324,21 +1335,98 @@ git commit -m "Describe the change"</code></pre>
     });
 
     function getTextForSearch(element) {
-      return `${element.textContent} ${element.dataset.keywords || ""}`.toLowerCase();
+      const group = element.closest(".search-group");
+      const groupHeading = group ? group.querySelector(".section-heading") : null;
+      const groupText = group ? `${groupHeading?.textContent || ""} ${group.dataset.keywords || ""}` : "";
+      return `${element.textContent} ${element.dataset.keywords || ""} ${groupText}`.toLowerCase();
+    }
+
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function removeSearchHighlights() {
+      document.querySelectorAll(".search-highlight").forEach((mark) => {
+        const text = document.createTextNode(mark.textContent);
+        mark.replaceWith(text);
+        text.parentNode.normalize();
+      });
+    }
+
+    function shouldSkipHighlightNode(node) {
+      const parent = node.parentElement;
+      return !parent || Boolean(parent.closest("script, style, input, textarea, button, .copy-status, .search-highlight"));
+    }
+
+    function highlightSearchValue(element, query) {
+      if (!query) return;
+
+      const matcher = new RegExp(escapeRegExp(query), "gi");
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (shouldSkipHighlightNode(node) || !matcher.test(node.nodeValue)) {
+            matcher.lastIndex = 0;
+            return NodeFilter.FILTER_REJECT;
+          }
+          matcher.lastIndex = 0;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+
+      nodes.forEach((node) => {
+        const fragment = document.createDocumentFragment();
+        const text = node.nodeValue;
+        let lastIndex = 0;
+
+        text.replace(matcher, (match, offset) => {
+          fragment.append(document.createTextNode(text.slice(lastIndex, offset)));
+          const mark = document.createElement("mark");
+          mark.className = "search-highlight";
+          mark.textContent = match;
+          fragment.append(mark);
+          lastIndex = offset + match.length;
+          return match;
+        });
+
+        fragment.append(document.createTextNode(text.slice(lastIndex)));
+        node.replaceWith(fragment);
+        matcher.lastIndex = 0;
+      });
+    }
+
+    function syncSearchGroups() {
+      searchGroups.forEach((group) => {
+        const childCards = Array.from(group.querySelectorAll(".term-card, .prompt-card, .safety-card"));
+        const hasVisibleChild = childCards.some((card) => !card.classList.contains("hidden"));
+        group.classList.toggle("hidden", !hasVisibleChild);
+      });
     }
 
     function applySearch() {
       const query = searchInput.value.trim().toLowerCase();
+      removeSearchHighlights();
       let visibleCount = 0;
 
-      searchableItems.forEach((item) => {
+      searchableCards.forEach((item) => {
         const isMatch = !query || getTextForSearch(item).includes(query);
         item.classList.toggle("hidden", !isMatch);
-        if (isMatch && item.classList.contains("section-card")) visibleCount += 1;
+        if (isMatch) {
+          visibleCount += 1;
+          highlightSearchValue(item, query);
+        }
       });
 
-      const anyVisible = searchableItems.some((item) => !item.classList.contains("hidden"));
-      emptyState.classList.toggle("show", !anyVisible);
+      syncSearchGroups();
+      searchGroups.forEach((group) => {
+        if (!group.classList.contains("hidden")) {
+          const heading = group.querySelector(".section-heading");
+          if (heading) highlightSearchValue(heading, query);
+        }
+      });
+      emptyState.classList.toggle("show", visibleCount === 0);
     }
 
     searchInput.addEventListener("input", applySearch);

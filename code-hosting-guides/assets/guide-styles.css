@@ -337,8 +337,17 @@ input {
 .section-card.hidden,
 .term-card.hidden,
 .info-card.hidden,
-.command-card.hidden {
+.command-card.hidden,
+.search-group.hidden {
   display: none;
+}
+
+.search-highlight {
+  padding: 0 2px;
+  border-radius: 4px;
+  background: #ffe36e;
+  color: #17201a;
+  box-shadow: 0 0 0 1px rgba(139, 79, 0, 0.16);
 }
 
 .section-header {

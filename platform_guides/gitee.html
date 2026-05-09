@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gitee 新手学习流程</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-guide="gitee">
+  <div class="guide-shell">
+    <aside class="sidebar" aria-label="Gitee 学习导航">
+      <a class="back-link" href="../index.html">返回 Codex 学习主页</a>
+      <div class="brand">
+        <div class="brand-mark">GE</div>
+        <h1>Gitee 新手学习流程</h1>
+        <p>面向国内访问和中文界面的代码托管平台入门路线。</p>
+      </div>
+
+      <div class="progress-panel" aria-live="polite">
+        <div class="progress-line">
+          <span>学习进度</span>
+          <strong id="progressText">0 / 6</strong>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <label for="searchInput">搜索章节、术语或命令</label>
+        <input id="searchInput" type="search" placeholder="例如：SSH、远程仓库、MR">
+      </div>
+
+      <div class="nav-title">学习顺序</div>
+      <ol class="nav-list">
+        <li><a class="nav-link" href="#intro" data-nav="intro"><span class="step-no">1</span><span>认识 Gitee</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#first-use" data-nav="first-use"><span class="step-no">2</span><span>第一次使用</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#warnings" data-nav="warnings"><span class="step-no">3</span><span>提醒和警示</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#learning-flow" data-nav="learning-flow"><span class="step-no">4</span><span>学习流程</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#terms" data-nav="terms"><span class="step-no">5</span><span>术语注解</span><span class="nav-check"></span></a></li>
+        <li><a class="nav-link" href="#commands" data-nav="commands"><span class="step-no">6</span><span>命令速查</span><span class="nav-check"></span></a></li>
+      </ol>
+    </aside>
+
+    <main class="main">
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="eyebrow">代码托管平台 · Gitee</div>
+          <h2>先跑通 clone、commit、push，再学习分支和合并请求。</h2>
+          <p>Gitee 是国内常用的 Git 代码托管平台。它和 GitHub 很像，也基于 Git 工作流，适合保存代码、中文协作、管理 issue 和发布项目文档。</p>
+          <div class="hero-actions">
+            <a class="btn" href="#intro">开始学习</a>
+            <a class="btn secondary" href="github.html">切换到 GitHub</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="content">
+        <section class="summary-grid" aria-label="Gitee 页面概览">
+          <div class="summary-card"><strong>Git</strong><span>本地版本控制工具，负责 add、commit、branch、merge。</span></div>
+          <div class="summary-card"><strong>Gitee</strong><span>远程代码托管平台，负责在线保存、协作、issue 和合并请求。</span></div>
+          <div class="summary-card"><strong>协议</strong><span>HTTPS 和 SSH 都能连接同一个仓库，只是认证方式不同。</span></div>
+        </section>
+
+        <div id="emptyState" class="empty-state">没有匹配内容。试试搜索“HTTPS”“SSH”“origin”或“合并请求”。</div>
+
+        <section id="intro" class="section-card searchable" data-keywords="gitee git github 代码托管 国内 中文 平台">
+          <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">
+              <h3>Gitee 是什么</h3>
+              <p>Gitee 是一个基于 Git 的代码托管平台，功能定位类似 GitHub。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="intro"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="card-grid">
+              <article class="info-card searchable" data-keywords="国内访问 中文">
+                <h4>中文界面友好</h4>
+                <p>Gitee 的界面、通知和协作流程对中文用户比较直接，适合国内团队和新手练习。</p>
+              </article>
+              <article class="info-card searchable" data-keywords="仓库 备份 保存">
+                <h4>保存和同步代码</h4>
+                <p>本地 Git 记录提交，Gitee 保存远程副本，让你可以在不同电脑之间同步项目。</p>
+              </article>
+              <article class="info-card searchable" data-keywords="issue 合并请求 pr mr">
+                <h4>协作管理</h4>
+                <p>可以用 issue 记录任务，用合并请求检查和合并分支修改。</p>
+              </article>
+            </div>
+            <div class="callout">Gitee 和 GitHub 不是 Git 的替代品。Git 是工具，Gitee/GitHub 是线上平台。</div>
+          </div>
+        </section>
+
+        <section id="first-use" class="section-card searchable" data-keywords="第一次 使用 注册 创建仓库 clone add commit push pull https ssh">
+          <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">
+              <h3>第一次使用前先确认这些事</h3>
+              <p>先选好仓库公开性和认证方式，再开始上传代码。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="first-use"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="card-grid">
+              <article class="info-card searchable" data-keywords="公开 私有 权限">
+                <h4>公开还是私有</h4>
+                <p>公开仓库适合展示和开源，私有仓库适合个人练习、公司项目和不想公开的代码。</p>
+              </article>
+              <article class="info-card searchable" data-keywords="remote origin 远程仓库">
+                <h4>远程仓库地址</h4>
+                <p>本地项目要 push 到 Gitee，必须让 Git 知道远程地址，常见别名是 <code>origin</code>。</p>
+              </article>
+              <article class="info-card searchable" data-keywords="https ssh token 密钥">
+                <h4>HTTPS 或 SSH</h4>
+                <p>HTTPS 上手快，SSH 长期使用更顺。两者只是连接同一个仓库的两种方式。</p>
+              </article>
+            </div>
+            <pre><code>git clone https://gitee.com/用户名/仓库名.git
+cd 仓库名
+git status
+git add .
+git commit -m "添加第一份说明"
+git push</code></pre>
+          </div>
+        </section>
+
+        <section id="warnings" class="section-card searchable" data-keywords="安全 警示 token 密钥 env 强推 reset force push">
+          <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">
+              <h3>提醒和警示</h3>
+              <p>代码托管平台会保存历史记录，所以不要把敏感内容带进提交。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="warnings"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="callout danger">不要提交密码、token、SSH 私钥、.env、数据库连接串和真实用户数据。仓库设为私有也不代表可以随便提交敏感信息。</div>
+            <div class="card-grid">
+              <article class="info-card searchable" data-keywords="gitignore node_modules dist log">
+                <h4>先写 .gitignore</h4>
+                <p>依赖目录、构建产物、日志、环境变量文件通常不应该提交到 Gitee。</p>
+              </article>
+              <article class="info-card searchable" data-keywords="push pull 冲突">
+                <h4>协作前先 pull</h4>
+                <p>多人修改同一个项目时，先拉取远程最新代码，减少冲突和覆盖风险。</p>
+              </article>
+              <article class="info-card searchable" data-keywords="force push reset hard">
+                <h4>谨慎危险命令</h4>
+                <p><code>git reset --hard</code> 和强推可能丢失内容。新手遇到冲突先查看状态，不要急着覆盖。</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="learning-flow" class="section-card searchable" data-keywords="学习路线 流程 注册 安装 git 分支 合并请求 issue">
+          <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">
+              <h3>推荐学习流程</h3>
+              <p>先完成本地到远程的最小闭环，再学习分支协作。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="learning-flow"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <ol class="flow-list">
+              <li>注册 Gitee 账号，绑定邮箱，理解公开仓库和私有仓库的区别。</li>
+              <li>安装 Git，配置 <code>user.name</code> 和 <code>user.email</code>。</li>
+              <li>创建一个练习仓库，初始化 README，复制 HTTPS 地址。</li>
+              <li>把仓库 clone 到本地，修改文件后完成 <code>add</code>、<code>commit</code>、<code>push</code>。</li>
+              <li>学习 <code>git remote -v</code>，理解本地项目为什么要关联远程仓库。</li>
+              <li>创建新分支，推送分支，发起合并请求，理解评审后再合并的流程。</li>
+              <li>熟悉 SSH key，长期使用时把认证方式从 HTTPS 逐步切到 SSH。</li>
+            </ol>
+          </div>
+        </section>
+
+        <section id="terms" class="section-card searchable" data-keywords="术语 注解 repository remote origin commit branch clone pull push pr mr issue https ssh token">
+          <div class="section-header">
+            <div class="section-number">5</div>
+            <div class="section-title">
+              <h3>术语注解</h3>
+              <p>这些词在 Gitee 页面和 Git 命令里会反复出现。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="terms"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="term-grid">
+              <article class="term-card searchable"><h4>Repository</h4><p>仓库，一个项目的代码、文档和提交历史集合。</p></article>
+              <article class="term-card searchable"><h4>Remote</h4><p>远程仓库地址，告诉本地 Git 要连接哪个线上仓库。</p></article>
+              <article class="term-card searchable"><h4>Origin</h4><p>默认远程仓库别名，通常指向 Gitee 上的项目地址。</p></article>
+              <article class="term-card searchable"><h4>Commit</h4><p>一次提交记录，描述某次修改做了什么。</p></article>
+              <article class="term-card searchable"><h4>Branch</h4><p>分支，用来开发功能、修复问题或隔离实验。</p></article>
+              <article class="term-card searchable"><h4>Clone</h4><p>把 Gitee 仓库下载到本地。</p></article>
+              <article class="term-card searchable"><h4>Pull</h4><p>把 Gitee 上的最新提交拉到本地。</p></article>
+              <article class="term-card searchable"><h4>Push</h4><p>把本地 commit 上传到 Gitee。</p></article>
+              <article class="term-card searchable"><h4>PR / MR</h4><p>合并请求，请求把一个分支的代码合并到目标分支。</p></article>
+              <article class="term-card searchable"><h4>Issue</h4><p>问题、需求或任务记录。</p></article>
+              <article class="term-card searchable"><h4>HTTPS</h4><p>用网页协议连接仓库，常用账号和访问令牌认证。</p></article>
+              <article class="term-card searchable"><h4>SSH</h4><p>用密钥认证连接仓库，配置后日常 push/pull 更方便。</p></article>
+              <article class="term-card searchable"><h4>Token</h4><p>访问令牌，用来替代密码授权命令行访问平台。</p></article>
+            </div>
+          </div>
+        </section>
+
+        <section id="commands" class="section-card searchable" data-keywords="命令 git status add commit remote push pull log diff clone branch ssh">
+          <div class="section-header">
+            <div class="section-number">6</div>
+            <div class="section-title">
+              <h3>常用命令速查</h3>
+              <p>先掌握这些命令，就能完成大部分 Gitee 日常使用。</p>
+            </div>
+            <label class="done-control"><input type="checkbox" data-step="commands"> 已掌握</label>
+          </div>
+          <div class="section-body">
+            <div class="command-grid">
+              <article class="command-card searchable">
+                <h4>本地版本控制</h4>
+                <pre><code>git status
+git add .
+git commit -m "说明"
+git log --oneline
+git diff</code></pre>
+              </article>
+              <article class="command-card searchable">
+                <h4>连接远程仓库</h4>
+                <pre><code>git clone 仓库地址
+git remote -v
+git remote add origin 仓库地址</code></pre>
+              </article>
+              <article class="command-card searchable">
+                <h4>同步远程仓库</h4>
+                <pre><code>git pull
+git push
+git push -u origin master</code></pre>
+              </article>
+              <article class="command-card searchable">
+                <h4>分支协作</h4>
+                <pre><code>git branch
+git checkout -b feature-name
+git merge feature-name</code></pre>
+              </article>
+              <article class="command-card searchable">
+                <h4>排查问题</h4>
+                <pre><code>git status
+git remote -v
+git log --oneline --decorate</code></pre>
+              </article>
+              <article class="command-card searchable">
+                <h4>SSH 密钥</h4>
+                <pre><code>ssh-keygen -t ed25519 -C "你的邮箱"
+ssh -T git@gitee.com</code></pre>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p>本页用于新手学习 Gitee 基础流程。真实项目中，仓库公开性、访问令牌、SSH 密钥和合并权限都需要谨慎处理。</p>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <button class="top-button" id="topButton" type="button">回到顶部</button>
+  <script src="assets/app.js"></script>
+</body>
+</html>
